@@ -1,5 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://d25s8v61c421l"]
 
+<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://b71ka66gmutmy" path="res://Buildings/building_06.png" id="2_0yt11"]
 [ext_resource type="Texture2D" uid="uid://cep4kj55fa0ba" path="res://Buildings/building_04.png" id="2_oknvu"]
 [ext_resource type="Texture2D" uid="uid://c1v0m0fx2d0mc" path="res://Buildings/building_08.png" id="3_mvluf"]
@@ -32,3 +33,15 @@ texture = ExtResource("5_ybl17")
 [node name="Building13" type="Sprite2D" parent="."]
 position = Vector2(-3507, 229)
 texture = ExtResource("6_aeapn")
+=======
+[ext_resource type="Texture2D" uid="uid://fdepcsdolrvu" path="res://Buildings/building_16.png" id="1_b7y3f"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="Building16" type="Sprite2D" parent="."]
+position = Vector2(-1127, -803)
+texture = ExtResource("1_b7y3f")
+>>>>>>> Stashed changes
