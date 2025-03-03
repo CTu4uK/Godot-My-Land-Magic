@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://d25s8v61c421l"]
 
-[ext_resource type="Texture2D" uid="uid://chip0hvo3lefl" path="res://Buildings/building_01.png" id="1_us0ik"]
+[ext_resource type="Texture2D" uid="uid://cep4kj55fa0ba" path="res://Buildings/building_04.png" id="2_oknvu"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Building01" type="Sprite2D" parent="."]
-position = Vector2(229, 327)
-texture = ExtResource("1_us0ik")
+[node name="Building04" type="Sprite2D" parent="."]
+position = Vector2(375, 289)
+texture = ExtResource("2_oknvu")
