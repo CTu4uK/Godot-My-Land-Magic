@@ -1,47 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://d25s8v61c421l"]
+[gd_scene load_steps=3 format=3 uid="uid://d25s8v61c421l"]
 
-<<<<<<< Updated upstream
-[ext_resource type="Texture2D" uid="uid://b71ka66gmutmy" path="res://Buildings/building_06.png" id="2_0yt11"]
-[ext_resource type="Texture2D" uid="uid://cep4kj55fa0ba" path="res://Buildings/building_04.png" id="2_oknvu"]
-[ext_resource type="Texture2D" uid="uid://c1v0m0fx2d0mc" path="res://Buildings/building_08.png" id="3_mvluf"]
-[ext_resource type="Texture2D" uid="uid://ci64bh7cjtdlr" path="res://Buildings/building_12.png" id="4_kluiw"]
-[ext_resource type="Texture2D" uid="uid://dn46mccdmyeey" path="res://Buildings/building_11.png" id="5_ybl17"]
-[ext_resource type="Texture2D" uid="uid://c7w55q72oifu1" path="res://Buildings/building_13.png" id="6_aeapn"]
+[ext_resource type="Texture2D" uid="uid://cep4kj55fa0ba" path="res://Buildings/building_04.png" id="1_eafca"]
+[ext_resource type="Texture2D" uid="uid://t034760if1f4" path="res://Buildings/building_05.png" id="2_fod4w"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Building04" type="Sprite2D" parent="."]
-position = Vector2(375, 289)
-texture = ExtResource("2_oknvu")
+position = Vector2(-1291, -595)
+texture = ExtResource("1_eafca")
 
-[node name="Building06" type="Sprite2D" parent="."]
-position = Vector2(-856, 468)
-texture = ExtResource("2_0yt11")
-
-[node name="Building08" type="Sprite2D" parent="."]
-position = Vector2(301, 1163)
-texture = ExtResource("3_mvluf")
-
-[node name="Building12" type="Sprite2D" parent="."]
-position = Vector2(-3758, -776)
-texture = ExtResource("4_kluiw")
-
-[node name="Building11" type="Sprite2D" parent="."]
-position = Vector2(-2645, -570)
-texture = ExtResource("5_ybl17")
-
-[node name="Building13" type="Sprite2D" parent="."]
-position = Vector2(-3507, 229)
-texture = ExtResource("6_aeapn")
-=======
-[ext_resource type="Texture2D" uid="uid://fdepcsdolrvu" path="res://Buildings/building_16.png" id="1_b7y3f"]
-
-[node name="Node2D" type="Node2D"]
-
-[node name="TileMap" type="TileMap" parent="."]
-format = 2
-
-[node name="Building16" type="Sprite2D" parent="."]
-position = Vector2(-1127, -803)
-texture = ExtResource("1_b7y3f")
->>>>>>> Stashed changes
+[node name="Building05" type="Sprite2D" parent="."]
+position = Vector2(1485, -619)
+texture = ExtResource("2_fod4w")
