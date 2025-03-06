@@ -1,24 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://d25s8v61c421l"]
+[gd_scene load_steps=4 format=3 uid="uid://d25s8v61c421l"]
 
-[ext_resource type="Texture2D" uid="uid://c0kap5p4x51vh" path="res://Buildings/building_02.png" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://vxdm2bg8b41b" path="res://Buildings/building_03.png" id="1_epypp"]
 [ext_resource type="Texture2D" uid="uid://t034760if1f4" path="res://Buildings/building_05.png" id="2_0hol4"]
 [ext_resource type="Texture2D" uid="uid://cp6n8k82sdsmo" path="res://Buildings/building_07.png" id="3_q6r6c"]
-[ext_resource type="Texture2D" uid="uid://c1v0m0fx2d0mc" path="res://Buildings/building_08.png" id="4_kdubu"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Building02" type="Sprite2D" parent="."]
-position = Vector2(-2948, -1776)
-texture = ExtResource("1_wtcfe")
+[node name="Building03" type="Sprite2D" parent="."]
+position = Vector2(-321, -4510)
+texture = ExtResource("1_epypp")
 
 [node name="Building05" type="Sprite2D" parent="."]
-position = Vector2(-4186, -3616)
+position = Vector2(-496, -3340)
 texture = ExtResource("2_0hol4")
 
 [node name="Building07" type="Sprite2D" parent="."]
-position = Vector2(-3583, -4695)
+position = Vector2(-4980, -1055)
 texture = ExtResource("3_q6r6c")
-
-[node name="Building08" type="Sprite2D" parent="."]
-position = Vector2(-2869, -3537)
-texture = ExtResource("4_kdubu")
