@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d25s8v61c421l"]
+[gd_scene load_steps=3 format=3 uid="uid://d25s8v61c421l"]
 
 [ext_resource type="Texture2D" uid="uid://cycphas2se28y" path="res://StrategyGameIcons/Anchor.png" id="1_wtcfe"]
+[ext_resource type="Texture2D" uid="uid://c0kap5p4x51vh" path="res://Buildings/building_02.png" id="2_0e48y"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -9,3 +10,7 @@
 [node name="Anchor" type="Sprite2D" parent="."]
 position = Vector2(-1398, -472)
 texture = ExtResource("1_wtcfe")
+
+[node name="Building02" type="Sprite2D" parent="."]
+position = Vector2(-753, -630)
+texture = ExtResource("2_0e48y")
