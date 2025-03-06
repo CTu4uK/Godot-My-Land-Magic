@@ -1123,7 +1123,3 @@ texture = ExtResource("10_ir8iy")
 [node name="Deer5" type="Sprite2D" parent="Animal"]
 position = Vector2(3522, -2550)
 texture = ExtResource("10_ir8iy")
-
-[node name="Building01" type="Sprite2D" parent="."]
-position = Vector2(803, 1109)
-texture = ExtResource("2_0e48y")
