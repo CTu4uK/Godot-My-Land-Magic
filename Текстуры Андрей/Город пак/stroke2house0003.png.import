@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cx358btwsmdsn"
-path="res://.godot/imported/stroke2house0003.png-099838d25d12ca2d005d3c967a45d434.ctex"
+path="res://.godot/imported/stroke2house0003.png-b36015ac857ea2da6afc99435a0bfa30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Текстуры Андрей/Город пак/house2/stroke2house0003.png"
-dest_files=["res://.godot/imported/stroke2house0003.png-099838d25d12ca2d005d3c967a45d434.ctex"]
+source_file="res://Текстуры Андрей/Город пак/stroke2house0003.png"
+dest_files=["res://.godot/imported/stroke2house0003.png-b36015ac857ea2da6afc99435a0bfa30.ctex"]
 
 [params]
 
