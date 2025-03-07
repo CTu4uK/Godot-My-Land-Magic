@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="Godot-My-Land-Magic"
+run/main_scene="uid://bynv5fp0sedha"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"

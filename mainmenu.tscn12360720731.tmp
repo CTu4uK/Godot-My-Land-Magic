@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://bynv5fp0sedha"]
+
+[ext_resource type="Texture2D" uid="uid://88ph6swf8l1g" path="res://FON.png" id="1_cmhrf"]
+[ext_resource type="Script" uid="uid://c4u18d0aok5ic" path="res://новая_игра.gd" id="2_d2nv2"]
+
+[node name="mainmenu" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -178.0
+offset_top = -221.0
+offset_right = 148.0
+offset_bottom = 228.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.561
+offset_left = -224.886
+offset_top = -56.0
+offset_right = 1146.11
+offset_bottom = 868.0
+texture = ExtResource("1_cmhrf")
+expand_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 611.0
+offset_top = 342.0
+offset_right = 825.0
+offset_bottom = 706.0
+alignment = 1
+
+[node name="Новая игра" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Новая игра "
+script = ExtResource("2_d2nv2")
+
+[node name="Продолжить" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Продолжить"
+
+[node name="Загрузить" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Загрузить"
+
+[node name="Настройки" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Настройки"
+
+[node name="Выход" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Выход"
