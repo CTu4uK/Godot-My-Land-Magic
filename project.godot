@@ -14,3 +14,9 @@ config/name="Godot-My-Land-Magic"
 run/main_scene="uid://bynv5fp0sedha"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalAudio="*res://global_audio.tscn"
+ResourceManager="*res://resource_manager.gd"
+CastleMenu="*res://castle_menu.gd"

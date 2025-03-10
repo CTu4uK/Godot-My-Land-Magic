@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0cbnohiivsqo"]
+
+[ext_resource type="AudioStream" uid="uid://0vft0iyyv7xp" path="res://Sound/tavern-music.mp3" id="1_bhu22"]
+
+[node name="GlobalAudio" type="Node2D"]
+
+[node name="Fonmusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_bhu22")
+autoplay = true
