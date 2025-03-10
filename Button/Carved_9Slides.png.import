@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtaggupw2s72j"
-path="res://.godot/imported/Button_Disable_9Slides.png-961f724d513ecb86c4c87cc1c85ed625.ctex"
+uid="uid://bxb5dw3c00r3i"
+path="res://.godot/imported/Carved_9Slides.png-41db9abb36406a40ebed4984cfb199f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Button_Disable_9Slides.png"
-dest_files=["res://.godot/imported/Button_Disable_9Slides.png-961f724d513ecb86c4c87cc1c85ed625.ctex"]
+source_file="res://Button/Carved_9Slides.png"
+dest_files=["res://.godot/imported/Carved_9Slides.png-41db9abb36406a40ebed4984cfb199f8.ctex"]
 
 [params]
 

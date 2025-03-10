@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b81iy0xi3s5no"
-path="res://.godot/imported/Button_Disable_3Slides.png-38769889f9782af69b3d11fd6af16bb2.ctex"
+uid="uid://dtnywfcv2qs0h"
+path="res://.godot/imported/Pressed_01.png-629d62435dd0570f999d028e4bd21dd8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Button_Disable_3Slides.png"
-dest_files=["res://.godot/imported/Button_Disable_3Slides.png-38769889f9782af69b3d11fd6af16bb2.ctex"]
+source_file="res://Button/Pressed_01.png"
+dest_files=["res://.godot/imported/Pressed_01.png-629d62435dd0570f999d028e4bd21dd8.ctex"]
 
 [params]
 
