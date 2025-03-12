@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bynv5fp0sedha"]
+[gd_scene load_steps=4 format=3 uid="uid://bynv5fp0sedha"]
 
 [ext_resource type="Texture2D" uid="uid://88ph6swf8l1g" path="res://FON.png" id="1_cmhrf"]
 [ext_resource type="Script" uid="uid://bnvq0kk45tbjk" path="res://mainmenu.gd" id="2_d2nv2"]
+[ext_resource type="AudioStream" uid="uid://lxtqwu02gqet" path="res://Sound/buttonmenu.mp3" id="3_wgsso"]
 
 [node name="mainmenu" type="Node2D"]
 
@@ -52,5 +53,9 @@ text = "Настройки"
 [node name="Выход" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Выход"
+
+[node name="ButtonSound" type="AudioStreamPlayer2D" parent="Control"]
+position = Vector2(611, 438)
+stream = ExtResource("3_wgsso")
 
 [connection signal="pressed" from="Control/VBoxContainer/Новая игра" to="Control" method="_on_новая_игра_pressed"]

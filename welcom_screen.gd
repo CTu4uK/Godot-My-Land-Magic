@@ -7,4 +7,4 @@ func _on_продолжить_pressed():
 	print("Кнопка нажата!")  # Проверяем, работает ли нажатие
 	visible = false  # Скрываем окно
 # Воспроизводим звук (убедись, что в дереве есть узел AudioStreamPlayer)
-	$AudioStreamPlayer2D.play()
+	$ButtonSound1.play()
