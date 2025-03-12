@@ -9,9 +9,8 @@ extends Control
 @onready var close_button = $CloseButton
 @onready var button_sound = $ButtonSound2
 
-# **Мешочек ресурсов**
-@onready var resource_bag = $"../ResourceBag"
-@onready var resource_bag_button = $"../ResourceBag/Button"
+# Проверяем, есть ли ResourceBag в дереве
+@onready var resource_bag = $ResourceBag if has_node("ResourceBag") else null
 
 # **Стартовые параметры деревни**
 var population = 3
@@ -26,22 +25,16 @@ var food_income = 1
 var wood_income = 1
 var gold_income = 1
 
-# **Запас ресурсов в "мешочке"**
-var stored_food = 0
-var stored_wood = 0
-var stored_gold = 0
-
 var is_visible = false
+
+# Таймеры
+var resource_timer: Timer
+var rumor_timer: Timer
+var population_timer: Timer
 
 func _ready():
 	visible = false
 	close_button.pressed.connect(_on_close_pressed)
-
-	# **Подключаем кнопку сбора ресурсов**
-	if resource_bag_button:
-		resource_bag_button.pressed.connect(_on_collect_resources)
-	else:
-		print("Ошибка: Кнопка сбора ресурсов не найдена!")
 
 	# **Скрываем мешочек при старте**
 	if resource_bag:
@@ -51,50 +44,62 @@ func _ready():
 
 	# **Запуск обновлений**
 	start_timers()
-	update_info()
+	update_info(population, food, wood, gold)
 
 # **Функция обновления информации в UI**
-func update_info():
+func update_info(population_value, food_value, wood_value, gold_value):
 	if population_label:
 		population_label.text = "Население: %d/%d" % [population, population_limit]
 
 	if food_label:
-		food_label.text = "Еда: %d" % food
+		food_label.text = "Еда: %d" % food_value
 
 	if wood_label:
-		wood_label.text = "Дерево: %d" % wood
+		wood_label.text = "Дерево: %d" % wood_value
 
 	if gold_label:
-		gold_label.text = "Золото: %d" % gold
+		gold_label.text = "Золото: %d" % gold_value
 
 	if rumors_label:
 		rumors_label.text = generate_rumor()
 
+	# **Обновляем видимость мешочка только когда в деревне накопилось 10+ ресурсов**
+	if resource_bag:
+		var show_bag = (food_value >= 10 or wood_value >= 10 or gold_value >=10)
+		print("проверка мешочка", show_bag)
+		
+		if show_bag:
+			print("принудительно включаем мешочек")
+			resource_bag.visible = true
+		else:
+			resource_bag.visible = false
+	
+
 # **Функция запуска таймеров**
 func start_timers():
-	# Таймер для ресурсов (раз в 10 сек для теста, можно увеличить)
-	var resource_timer = Timer.new()
-	resource_timer.wait_time = 10.0  
-	resource_timer.autostart = true
-	resource_timer.timeout.connect(_on_resource_update)
-	add_child(resource_timer)
-	resource_timer.start()
+	if resource_timer == null:
+		resource_timer = Timer.new()
+		resource_timer.wait_time = 10.0  
+		resource_timer.autostart = true
+		resource_timer.timeout.connect(_on_resource_update)
+		add_child(resource_timer)
+		resource_timer.start()
 
-	# Таймер для слухов (раз в 2 минуты)
-	var rumor_timer = Timer.new()
-	rumor_timer.wait_time = 120.0  
-	rumor_timer.autostart = true
-	rumor_timer.timeout.connect(_on_rumor_update)
-	add_child(rumor_timer)
-	rumor_timer.start()
+	if rumor_timer == null:
+		rumor_timer = Timer.new()
+		rumor_timer.wait_time = 120.0  
+		rumor_timer.autostart = true
+		rumor_timer.timeout.connect(_on_rumor_update)
+		add_child(rumor_timer)
+		rumor_timer.start()
 
-	# Таймер для населения (раз в 15 минут)
-	var population_timer = Timer.new()
-	population_timer.wait_time = 900.0  
-	population_timer.autostart = true
-	population_timer.timeout.connect(_on_population_update)
-	add_child(population_timer)
-	population_timer.start()
+	if population_timer == null:
+		population_timer = Timer.new()
+		population_timer.wait_time = 300.0  
+		population_timer.autostart = true
+		population_timer.timeout.connect(_on_population_update)
+		add_child(population_timer)
+		population_timer.start()
 
 # **Функция обновления ресурсов**
 func _on_resource_update():
@@ -102,49 +107,27 @@ func _on_resource_update():
 	wood += wood_income
 	gold += gold_income
 
-	# Если набралось 10 ресурсов, отправляем в "мешочек"
-	if food >= 10:
-		stored_food += 10
-		food -= 10
-
-	if wood >= 10:
-		stored_wood += 10
-		wood -= 10
-
-	if gold >= 10:
-		stored_gold += 10
-		gold -= 10
-
-	# Если есть накопленные ресурсы, показываем мешочек
-	if stored_food > 0 or stored_wood > 0 or stored_gold > 0:
-		if resource_bag:
-			resource_bag.visible = true
-
-	update_info()
+	update_info(population, food, wood, gold)
 
 # **Функция сбора ресурсов (клик по мешочку)**
 func _on_collect_resources():
-	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [stored_food, stored_wood, stored_gold])
+	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
 
-	# Добавляем к общему запасу (предполагается, что GlobalResources существует)
-	if has_node("/root/GlobalResources"):
-		var global_resources = get_node("/root/GlobalResources")
-		global_resources.food += stored_food
-		global_resources.wood += stored_wood
-		global_resources.gold += stored_gold
-	else:
-		print("Ошибка: GlobalResources не найден!")
+	# Передача ресурсов в общий пул
+	GlobalResources.food += food
+	GlobalResources.wood += wood
+	GlobalResources.gold += gold
 
-	# Очищаем накопленные ресурсы
-	stored_food = 0
-	stored_wood = 0
-	stored_gold = 0
+	# Обнуляем ресурсы деревни
+	food = 0
+	wood = 0
+	gold = 0
 
 	# Скрываем мешочек
 	if resource_bag:
 		resource_bag.visible = false
 
-	update_info()
+	update_info(population, food, wood, gold)
 
 # **Функция обновления слухов**
 func _on_rumor_update():
@@ -155,7 +138,7 @@ func _on_rumor_update():
 func _on_population_update():
 	if population < population_limit:
 		population += 1
-		update_info()
+		update_info(population, food, wood, gold)
 
 # **Функция генерации слухов**
 func generate_rumor():
@@ -176,10 +159,8 @@ func generate_rumor():
 # **Закрываем меню**
 func _on_close_pressed():
 	visible = false
-	if button_sound:
-		button_sound.play()
+	button_sound.play()
 
 # **Функция звука для нажатий кнопки деревни**
 func _on_village_button_pressed():
-	if button_sound:
-		button_sound.play()
+	button_sound.play()
