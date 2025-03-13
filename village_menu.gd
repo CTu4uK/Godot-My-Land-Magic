@@ -114,6 +114,7 @@ func _on_resource_update():
 # **Функция сбора ресурсов (Кнопка в меню)**
 func _on_collect_resources():
 	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
+	button_sound.play()
 
 	# Передача ресурсов в общий пул
 	GlobalResources.food += food
