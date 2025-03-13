@@ -46,4 +46,4 @@ func _process(delta):
 # Обновляем UI при изменении ресурсов
 func update_ui():
 	if has_node("VillageMenu"):
-		get_node("VillageMenu").update_info(population, food, wood, gold)
+		get_node("VillageMenu").update_info()

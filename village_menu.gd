@@ -8,9 +8,9 @@ extends Control
 @onready var quest_panel = $QuestPanel
 @onready var close_button = $CloseButton
 @onready var button_sound = $ButtonSound2
-@onready var collect_button = $CollectButton  # Новая кнопка
+@onready var collect_button = $CollectButton  # Кнопка сбора ресурсов
 
-# **Стартовые параметры деревни**
+# **Параметры деревни**
 var population = 3
 var population_limit = 52
 var loyalty = 100  
@@ -28,30 +28,31 @@ var resource_timer: Timer
 var rumor_timer: Timer
 var population_timer: Timer
 
+# **Запуск игры**
 func _ready():
 	visible = false
 	close_button.pressed.connect(_on_close_pressed)
-	collect_button.pressed.connect(_on_collect_resources)  # Подключаем кнопку
+	collect_button.pressed.connect(_on_collect_resources)  
 
 	start_timers()
-	update_info(population, food, wood, gold)
+	update_info()
 
-# **Функция обновления информации в UI**
-func update_info(population_value, food_value, wood_value, gold_value):
+	# **Первый слух при старте**
+	_on_rumor_update()
+
+# **Функция обновления UI**
+func update_info():
 	if population_label:
 		population_label.text = "Население: %d/%d" % [population, population_limit]
 
 	if food_label:
-		food_label.text = "Еда: %d" % food_value
+		food_label.text = "Еда: %d" % food
 
 	if wood_label:
-		wood_label.text = "Дерево: %d" % wood_value
+		wood_label.text = "Дерево: %d" % wood
 
 	if gold_label:
-		gold_label.text = "Золото: %d" % gold_value
-
-	if rumors_label:
-		rumors_label.text = generate_rumor()
+		gold_label.text = "Золото: %d" % gold
 
 # **Функция запуска таймеров**
 func start_timers():
@@ -65,7 +66,7 @@ func start_timers():
 
 	if rumor_timer == null:
 		rumor_timer = Timer.new()
-		rumor_timer.wait_time = 120.0  
+		rumor_timer.wait_time = 120.0  # Слухи обновляются раз в 2 минуты
 		rumor_timer.autostart = true
 		rumor_timer.timeout.connect(_on_rumor_update)
 		add_child(rumor_timer)
@@ -78,41 +79,6 @@ func start_timers():
 		population_timer.timeout.connect(_on_population_update)
 		add_child(population_timer)
 		population_timer.start()
-
-# **Функция обновления ресурсов**
-func _on_resource_update():
-	food += food_income
-	wood += wood_income
-	gold += gold_income
-
-	update_info(population, food, wood, gold)
-
-# **Функция сбора ресурсов (кнопка в меню)**
-func _on_collect_resources():
-	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
-
-	# Передача ресурсов в общий пул
-	GlobalResources.food += food
-	GlobalResources.wood += wood
-	GlobalResources.gold += gold
-
-	# Обнуляем ресурсы деревни
-	food = 0
-	wood = 0
-	gold = 0
-
-	update_info(population, food, wood, gold)
-
-# **Функция обновления слухов**
-func _on_rumor_update():
-	if rumors_label:
-		rumors_label.text = generate_rumor()
-
-# **Функция увеличения населения**
-func _on_population_update():
-	if population < population_limit:
-		population += 1
-		update_info(population, food, wood, gold)
 
 # **Функция генерации слухов**
 func generate_rumor():
@@ -130,11 +96,48 @@ func generate_rumor():
 	]
 	return rumors[randi() % rumors.size()]
 
+# **Функция обновления слухов (по таймеру)**
+func _on_rumor_update():
+	if rumors_label:
+		var new_rumor = generate_rumor()
+		print("Новый слух:", new_rumor)  # Логируем слухи в консоли
+		rumors_label.text = new_rumor
+
+# **Функция обновления ресурсов**
+func _on_resource_update():
+	food += food_income
+	wood += wood_income
+	gold += gold_income
+
+	update_info()
+
+# **Функция сбора ресурсов (Кнопка в меню)**
+func _on_collect_resources():
+	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
+
+	# Передача ресурсов в общий пул
+	GlobalResources.food += food
+	GlobalResources.wood += wood
+	GlobalResources.gold += gold
+
+	# Обнуляем ресурсы деревни
+	food = 0
+	wood = 0
+	gold = 0
+
+	update_info()
+
+# **Функция увеличения населения**
+func _on_population_update():
+	if population < population_limit:
+		population += 1
+		update_info()
+
 # **Закрываем меню**
 func _on_close_pressed():
 	visible = false
 	button_sound.play()
 
-# **Функция звука для нажатий кнопки деревни**
+# **Функция звука кнопки**
 func _on_village_button_pressed():
 	button_sound.play()
