@@ -4,7 +4,7 @@ extends Control
 @onready var stone_label = $TextureRect/Stone
 @onready var rumors_label = $TextureRect/Rumors
 @onready var close_button = $CloseButton
-@onready var button_sound = $ButtonSound2
+@onready var button_sound = $TextureRect/ButtonSound2
 
 # **Параметры каменоломни**
 var population = 3
@@ -109,3 +109,7 @@ func generate_rumor():
 func _on_close_pressed():
 	visible = false
 	button_sound.play()
+
+
+func _on_openbutton_pressed() -> void:
+	pass # Replace with function body.
