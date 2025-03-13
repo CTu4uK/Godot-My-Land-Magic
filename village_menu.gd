@@ -8,9 +8,7 @@ extends Control
 @onready var quest_panel = $QuestPanel
 @onready var close_button = $CloseButton
 @onready var button_sound = $ButtonSound2
-
-# Проверяем, есть ли ResourceBag в дереве
-@onready var resource_bag = $ResourceBag if has_node("ResourceBag") else null
+@onready var collect_button = $CollectButton  # Новая кнопка
 
 # **Стартовые параметры деревни**
 var population = 3
@@ -25,8 +23,6 @@ var food_income = 1
 var wood_income = 1
 var gold_income = 1
 
-var is_visible = false
-
 # Таймеры
 var resource_timer: Timer
 var rumor_timer: Timer
@@ -35,14 +31,8 @@ var population_timer: Timer
 func _ready():
 	visible = false
 	close_button.pressed.connect(_on_close_pressed)
+	collect_button.pressed.connect(_on_collect_resources)  # Подключаем кнопку
 
-	# **Скрываем мешочек при старте**
-	if resource_bag:
-		resource_bag.visible = false
-	else:
-		print("Ошибка: ResourceBag не найден!")
-
-	# **Запуск обновлений**
 	start_timers()
 	update_info(population, food, wood, gold)
 
@@ -62,18 +52,6 @@ func update_info(population_value, food_value, wood_value, gold_value):
 
 	if rumors_label:
 		rumors_label.text = generate_rumor()
-
-	# **Обновляем видимость мешочка только когда в деревне накопилось 10+ ресурсов**
-	if resource_bag:
-		var show_bag = (food_value >= 10 or wood_value >= 10 or gold_value >=10)
-		print("проверка мешочка", show_bag)
-		
-		if show_bag:
-			print("принудительно включаем мешочек")
-			resource_bag.visible = true
-		else:
-			resource_bag.visible = false
-	
 
 # **Функция запуска таймеров**
 func start_timers():
@@ -109,7 +87,7 @@ func _on_resource_update():
 
 	update_info(population, food, wood, gold)
 
-# **Функция сбора ресурсов (клик по мешочку)**
+# **Функция сбора ресурсов (кнопка в меню)**
 func _on_collect_resources():
 	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
 
@@ -122,10 +100,6 @@ func _on_collect_resources():
 	food = 0
 	wood = 0
 	gold = 0
-
-	# Скрываем мешочек
-	if resource_bag:
-		resource_bag.visible = false
 
 	update_info(population, food, wood, gold)
 
