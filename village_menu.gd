@@ -10,7 +10,9 @@ extends Control
 @onready var button_sound = $ButtonSound2
 @onready var collect_button = $CollectButton  # Кнопка сбора ресурсов
 
-# **Параметры деревни**
+signal population_updated  # ✅ Добавляем сигнал
+
+# **Стартовые параметры деревни**
 var population = 3
 var population_limit = 52
 var loyalty = 100  
@@ -28,17 +30,23 @@ var resource_timer: Timer
 var rumor_timer: Timer
 var population_timer: Timer
 
-# **Запуск игры**
+var current_rumor: String  # ✅ Добавляем переменную для хранения слухов
+
 func _ready():
 	visible = false
+	
+	# ✅ Передаём начальное население в общий пул при запуске
+	if GlobalResources.population == 3:
+		GlobalResources.population += population 
+
 	close_button.pressed.connect(_on_close_pressed)
-	collect_button.pressed.connect(_on_collect_resources)  
+	collect_button.pressed.connect(_on_collect_resources)
+	collect_button.pressed.connect(_on_button_sound)
+	close_button.pressed.connect(_on_button_sound)
 
 	start_timers()
+	_on_rumor_update()  # ✅ Принудительно загружаем слухи при старте
 	update_info()
-
-	# **Первый слух при старте**
-	_on_rumor_update()
 
 # **Функция обновления UI**
 func update_info():
@@ -54,6 +62,10 @@ func update_info():
 	if gold_label:
 		gold_label.text = "Золото: %d" % gold
 
+	if rumors_label:
+		rumors_label.text = current_rumor  # ✅ Используем сохраненный слух
+		rumors_label.autowrap_mode = TextServer.AUTOWRAP_WORD  # ✅ Перенос слов
+
 # **Функция запуска таймеров**
 func start_timers():
 	if resource_timer == null:
@@ -66,7 +78,7 @@ func start_timers():
 
 	if rumor_timer == null:
 		rumor_timer = Timer.new()
-		rumor_timer.wait_time = 120.0  # Слухи обновляются раз в 2 минуты
+		rumor_timer.wait_time = 120.0  
 		rumor_timer.autostart = true
 		rumor_timer.timeout.connect(_on_rumor_update)
 		add_child(rumor_timer)
@@ -74,11 +86,54 @@ func start_timers():
 
 	if population_timer == null:
 		population_timer = Timer.new()
-		population_timer.wait_time = 300.0  
+		population_timer.wait_time = 60.0  
 		population_timer.autostart = true
 		population_timer.timeout.connect(_on_population_update)
 		add_child(population_timer)
 		population_timer.start()
+
+# **Функция обновления ресурсов**
+func _on_resource_update():
+	food += food_income
+	wood += wood_income
+	gold += gold_income
+	update_info()
+
+# **Функция сбора ресурсов (кнопка)**
+func _on_collect_resources():
+	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
+
+	# ✅ Передаём ресурсы в общий пул
+	GlobalResources.food += food
+	GlobalResources.wood += wood
+	GlobalResources.gold += gold
+
+	# ✅ Обнуляем ресурсы в деревне
+	food = 0
+	wood = 0
+	gold = 0
+
+	update_info()  # ✅ Обновляем интерфейс
+
+# **Функция обновления слухов (только по таймеру)**
+func _on_rumor_update():
+	current_rumor = generate_rumor()  # ✅ Генерируем слух один раз и сохраняем
+	update_info()  # ✅ Отображаем новый слух
+
+# **Функция увеличения населения**
+func _on_population_update():
+	if population < population_limit:
+		population += 1
+		GlobalResources.update_population()  # ✅ Теперь вызываем обновление населения
+		print("[DEBUG] Население деревни:", population)
+		update_info()
+
+
+
+# **Функция возвращает население деревни**
+func get_population() -> int:
+	print("[DEBUG] Запрос населения деревни:", population)  # ✅ Лог
+	return population
 
 # **Функция генерации слухов**
 func generate_rumor():
@@ -96,49 +151,11 @@ func generate_rumor():
 	]
 	return rumors[randi() % rumors.size()]
 
-# **Функция обновления слухов (по таймеру)**
-func _on_rumor_update():
-	if rumors_label:
-		var new_rumor = generate_rumor()
-		print("Новый слух:", new_rumor)  # Логируем слухи в консоли
-		rumors_label.text = new_rumor
-
-# **Функция обновления ресурсов**
-func _on_resource_update():
-	food += food_income
-	wood += wood_income
-	gold += gold_income
-
-	update_info()
-
-# **Функция сбора ресурсов (Кнопка в меню)**
-func _on_collect_resources():
-	print("Собрано ресурсов: Еда %d, Дерево %d, Золото %d" % [food, wood, gold])
-	button_sound.play()
-
-	# Передача ресурсов в общий пул
-	GlobalResources.food += food
-	GlobalResources.wood += wood
-	GlobalResources.gold += gold
-
-	# Обнуляем ресурсы деревни
-	food = 0
-	wood = 0
-	gold = 0
-
-	update_info()
-
-# **Функция увеличения населения**
-func _on_population_update():
-	if population < population_limit:
-		population += 1
-		update_info()
-
 # **Закрываем меню**
 func _on_close_pressed():
 	visible = false
-	button_sound.play()
 
-# **Функция звука кнопки**
-func _on_village_button_pressed():
-	button_sound.play()
+# **Функция звука кнопок**
+func _on_button_sound():
+	if button_sound:
+		button_sound.play()
